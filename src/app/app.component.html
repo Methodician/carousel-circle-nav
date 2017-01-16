@@ -1,24 +1,26 @@
 <h1>
-  {{title}}
+  {{ showButtons }}
 </h1>
 
-<div class="carousel">
+<div [style.width.vw]="widthVW" class="carousel" (mouseover)="carouselMouseOver()" (mouseleave)="carouselMouseLeave()">
   <div class="carousel-img">
-    <button class="left-btn">
-      <i class="fa fa-3x fa-angle-double-left"></i>
+    <button [hidden]="!showButtons" id="cycle-button" (click)="cycleSlides()" class="btn">
+      <i class="fa fa-3x" [class.fa-play]="!cycling" [class.fa-pause]="cycling"></i>
     </button>
-    <div class="slide">
+    <button class="left-btn">
+      <i class="fa fa-3x fa-step-backward"></i>
+    </button>
+    <div class="slide" *ngFor="let slide of slides; let i = index" [hidden]="i !== currentIndex">
       <!--Replace later with slide component when internet is up and can figure out styleing...-->
-      <img src="../assets/images/gss_filters_open.png" alt="Filters Open">
+      <img [src]="slides[i].filePath" alt="Filters Open">
+
     </div>
     <button class="right-bth">
-      <i class="fa fa-3x fa-angle-double-right"></i>
+      <i class="fa fa-3x fa-step-forward"></i>
     </button>
   </div>
   <div class="circle-nav">
-    <button></button>
-    <button class="circle-nav-active"></button>
-    <button></button>
-    <button></button>
+    <button *ngFor="let slide of slides; let i = index" (click)="currentIndex = i" [style.width.vw]="widthVW / slides.length - 1"
+      [style.height.vw]="widthVW / slides.length - 1" [class.circle-nav-active]="i === currentIndex"></button>
   </div>
 </div>
