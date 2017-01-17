@@ -3,24 +3,26 @@
 </h1>
 
 <div [style.width.vw]="widthVW" class="carousel" (mouseover)="carouselMouseOver()" (mouseleave)="carouselMouseLeave()">
-  <div class="carousel-img">
-    <button [hidden]="!showButtons" id="cycle-button" (click)="cycleSlides()" class="btn">
-      <i class="fa fa-3x" [class.fa-play]="!cycling" [class.fa-pause]="cycling"></i>
-    </button>
-    <button class="left-btn">
+  <div id="carousel-body">
+    <div id="button-bar" *ngIf="showButtons" [style.width.vw]="widthVW">
+      <button id="left-btn" (click)="previousSlide()">
       <i class="fa fa-3x fa-step-backward"></i>
     </button>
+      <button id="cycle-button" (click)="cycleSlides()" class="btn">
+      <i class="fa fa-3x" [class.fa-play]="!cycling" [class.fa-pause]="cycling"></i>
+    </button>
+      <button id="right-btn" (click)="nextSlide()">
+      <i class="fa fa-3x fa-step-forward"></i>
+    </button>
+    </div>
     <div class="slide" *ngFor="let slide of slides; let i = index" [hidden]="i !== currentIndex">
       <!--Replace later with slide component when internet is up and can figure out styleing...-->
       <img [src]="slides[i].filePath" alt="Filters Open">
-
     </div>
-    <button class="right-bth">
-      <i class="fa fa-3x fa-step-forward"></i>
-    </button>
   </div>
-  <div class="circle-nav">
-    <button *ngFor="let slide of slides; let i = index" (click)="currentIndex = i" [style.width.vw]="widthVW / slides.length - 1"
-      [style.height.vw]="widthVW / slides.length - 1" [class.circle-nav-active]="i === currentIndex"></button>
+  <div id="circle-nav">
+    <!--I think I need to do the transform in the animation... Might be getting ahead of myself with calculations-->
+    <button *ngFor="let slide of slides; let i = index" (click)="currentIndex = i" [style.width.vw]="circleNavSize()" [style.height.vw]="circleNavSize(i)"
+      [style.transform]="circleNavTransform()"></button>
   </div>
 </div>

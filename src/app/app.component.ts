@@ -73,8 +73,22 @@ export class AppComponent implements OnInit {
     if (this.currentIndex < this.slides.length - 1)
       this.currentIndex++;
     else this.currentIndex = 0;
-    /*setTimeout(() => {
-      this.nextSlide();
-    }, this.slideInterval);*/
+  }
+  previousSlide() {
+    if (this.currentIndex == 0)
+      this.currentIndex = this.slides.length - 1;
+    else this.currentIndex--;
+  }
+
+  circleNavSize(index?) {
+    let divisor = this.slides.length < 6 ? 6 : this.slides.length;
+    if (index === this.currentIndex)
+      return (this.widthVW / divisor - 1) * 0.75;
+    return this.widthVW / divisor - 1;
+  }
+
+  //  I think I need to do the transform in the animation... Might be getting ahead of myself with calculations...
+  circleNavTransform() {
+    return 'translateY(' + this.circleNavSize() + ')';
   }
 }
